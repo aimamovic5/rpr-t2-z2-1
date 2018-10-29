@@ -65,4 +65,25 @@ public class Interval {
         return (Tacka > pocetnaTacka && Tacka < krajnjaTacka);
     }
 
+    public Interval intersect(Interval interval) {
+        if (Math.abs(interval.getPocetnaTacka() - this.getPocetnaTacka()) < 0.00001 && Math.abs(interval.getKrajnjaTacka() - this.getKrajnjaTacka()) < 0.00001) {
+            if (interval.isPocetnaUkljucena() && this.isPocetnaUkljucena())
+                if (interval.isKrajnjaUkljucena() && this.isKrajnjaUkljucena())
+                    return new Interval(this.getPocetnaTacka(), this.getKrajnjaTacka(),false,false);
+                else
+                    return new Interval(this.getPocetnaTacka(), this.getKrajnjaTacka(), true, false);
+            else
+                return new Interval(this.getPocetnaTacka(), this.getKrajnjaTacka(),false,false);
+        }
+        if (interval.getKrajnjaTacka() < this.getPocetnaTacka() || interval.getPocetnaTacka() > this.getKrajnjaTacka())
+            return new Interval();
+        if (interval.getPocetnaTacka() > this.getPocetnaTacka() && interval.getKrajnjaTacka() < this.getKrajnjaTacka())
+            return new Interval(interval.getPocetnaTacka(), interval.getKrajnjaTacka(), interval.isPocetnaUkljucena(), interval.isKrajnjaUkljucena());
+        if (interval.getPocetnaTacka() < this.getPocetnaTacka() && interval.getKrajnjaTacka() > this.getKrajnjaTacka())
+            return new Interval(this.getPocetnaTacka(), this.getKrajnjaTacka(), this.isPocetnaUkljucena(), this.isKrajnjaUkljucena());
+        if (interval.getPocetnaTacka() < this.getPocetnaTacka())
+            return new Interval(this.getPocetnaTacka(), interval.getKrajnjaTacka(), this.isPocetnaUkljucena(), interval.isKrajnjaUkljucena());
+        return new Interval(interval.getPocetnaTacka(), this.getKrajnjaTacka(), interval.isPocetnaUkljucena(), this.isKrajnjaUkljucena());
+    }
+
 }
