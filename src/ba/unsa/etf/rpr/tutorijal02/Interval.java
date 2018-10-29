@@ -106,5 +106,25 @@ public class Interval {
         return new Interval(drugiInterval.getPocetnaTacka(), prviInterval.getKrajnjaTacka(), drugiInterval.isPocetnaUkljucena(), prviInterval.isKrajnjaUkljucena());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Interval interval = (Interval)obj;
+        return (this.getPocetnaTacka() == interval.getPocetnaTacka() && this.getKrajnjaTacka() == interval.getKrajnjaTacka()
+                && this.isPocetnaUkljucena() == interval.isPocetnaUkljucena() && this.isKrajnjaUkljucena() == interval.isKrajnjaUkljucena());
+    }
 
+    @Override
+    public String toString() {
+        if (Math.abs(this.getPocetnaTacka()) < 0.00001 && Math.abs(this.getKrajnjaTacka()) < 0.00001)
+            return new String("()");
+        if(this.isPocetnaUkljucena() && this.isKrajnjaUkljucena())
+            return new String("[" + Double.toString(this.getPocetnaTacka()) + "," + Double.toString(this.getKrajnjaTacka()) + "]");
+        if(!this.isPocetnaUkljucena() && this.isKrajnjaUkljucena())
+            return new String("(" + Double.toString(this.getPocetnaTacka()) + "," + Double.toString(this.getKrajnjaTacka()) + "]");
+        if(this.isPocetnaUkljucena() && !this.isKrajnjaUkljucena())
+            return new String("[" + Double.toString(this.getPocetnaTacka()) + "," + Double.toString(this.getKrajnjaTacka()) + ")");
+        //if(!this.isPocetnaUkljucena() && !this.isKrajnjaUkljucena())
+        return new String("(" + Double.toString(this.getPocetnaTacka()) + "," + Double.toString(this.getKrajnjaTacka()) + ")");
+
+    }
 }
