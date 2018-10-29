@@ -85,5 +85,26 @@ public class Interval {
             return new Interval(this.getPocetnaTacka(), interval.getKrajnjaTacka(), this.isPocetnaUkljucena(), interval.isKrajnjaUkljucena());
         return new Interval(interval.getPocetnaTacka(), this.getKrajnjaTacka(), interval.isPocetnaUkljucena(), this.isKrajnjaUkljucena());
     }
+    public static Interval intersect(Interval prviInterval, Interval drugiInterval) {
+        if (Math.abs(drugiInterval.getPocetnaTacka() - prviInterval.getPocetnaTacka()) < 0.00001 && Math.abs(drugiInterval.getKrajnjaTacka() - prviInterval.getKrajnjaTacka()) < 0.00001) {
+            if (drugiInterval.isPocetnaUkljucena() && prviInterval.isPocetnaUkljucena())
+                if (drugiInterval.isKrajnjaUkljucena() && prviInterval.isKrajnjaUkljucena())
+                    return new Interval(prviInterval.getPocetnaTacka(), prviInterval.getKrajnjaTacka(),false,false);
+                else
+                    return new Interval(prviInterval.getPocetnaTacka(), prviInterval.getKrajnjaTacka(), true, false);
+            else
+                return new Interval(prviInterval.getPocetnaTacka(), prviInterval.getKrajnjaTacka(),false,false);
+        }
+        if (drugiInterval.getKrajnjaTacka() < prviInterval.getPocetnaTacka() || drugiInterval.getPocetnaTacka() > prviInterval.getKrajnjaTacka())
+            return new Interval();
+        if (drugiInterval.getPocetnaTacka() > prviInterval.getPocetnaTacka() && drugiInterval.getKrajnjaTacka() < prviInterval.getKrajnjaTacka())
+            return new Interval(drugiInterval.getPocetnaTacka(), drugiInterval.getKrajnjaTacka(), drugiInterval.isPocetnaUkljucena(), drugiInterval.isKrajnjaUkljucena());
+        if (drugiInterval.getPocetnaTacka() < prviInterval.getPocetnaTacka() && drugiInterval.getKrajnjaTacka() > prviInterval.getKrajnjaTacka())
+            return new Interval(prviInterval.getPocetnaTacka(), prviInterval.getKrajnjaTacka(), prviInterval.isPocetnaUkljucena(), prviInterval.isKrajnjaUkljucena());
+        if (drugiInterval.getPocetnaTacka() < prviInterval.getPocetnaTacka())
+            return new Interval(prviInterval.getPocetnaTacka(), drugiInterval.getKrajnjaTacka(), prviInterval.isPocetnaUkljucena(), drugiInterval.isKrajnjaUkljucena());
+        return new Interval(drugiInterval.getPocetnaTacka(), prviInterval.getKrajnjaTacka(), drugiInterval.isPocetnaUkljucena(), prviInterval.isKrajnjaUkljucena());
+    }
+
 
 }
